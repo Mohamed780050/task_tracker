@@ -92,4 +92,36 @@ async function AddItem(titles: string[]) {
     console.log(err);
   }
 }
-export default { ListAllItems, AddItem };
+async function updateTask(id: number, params: string[]) {
+  try {
+    const jsonData = await fs.readFile(
+      path.join(process.cwd(), "data", "data.json"),
+      "utf-8"
+    );
+    const data: {
+      id: number;
+      title: string;
+      status: "done" | "in progress" | "not started";
+    }[] = JSON.parse(jsonData);
+    const task = data.find((item) => item.id === id);
+    if (!task) {
+      console.log("Task is not found");
+      return;
+    }
+    if (params.length === 1) {
+      switch (params[0]) {
+        case "-d":
+        case "--done":
+          if (task.status === "done") {
+            console.log(chalk.green(`${task.title} is already done`));
+            break;
+          }
+          
+          break;
+      }
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+export default { ListAllItems, AddItem, updateTask };

@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 import checkOnData from "./middlewares/checkOnData.js";
 import action from "./middlewares/actions.js";
+import { checkNumber } from "./middlewares/checkNumber.js";
+
 await checkOnData();
 const commands = process.argv.slice(2);
 const validCommands = ["list", "add", "remove", "update"];
@@ -16,5 +18,17 @@ switch (findCommand) {
     const tasksTitle = commands.slice(1);
     if (!tasksTitle.length) console.log("Please enter a title for the task");
     else await action.AddItem(tasksTitle);
+    break;
+  case "update":
+    const taskInfo = commands.slice(1);
+    if (taskInfo.length === 1) {
+      console.log("choose what to update");
+      break;
+    }
+    const isANumber = checkNumber(taskInfo[0]);
+    if (isANumber) {
+      const params = taskInfo.slice(1);
+      await action.updateTask(parseInt(taskInfo[0]), params);
+    } else console.log("invalid Id");
     break;
 }

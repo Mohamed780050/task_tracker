@@ -1,5 +1,6 @@
 [
   { "id": 1, "title": "task one", "status": "done" },
   { "id": 2, "title": "task two", "status": "in progress" },
-  { "id": 3, "title": "task three", "status": "not started" }
+  { "id": 3, "title": "task three", "status": "not started" },
+  { "id": 4, "title": "todo", "status": "not started" }
 ]
