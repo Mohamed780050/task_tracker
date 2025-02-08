@@ -108,18 +108,32 @@ async function updateTask(id: number, params: string[]) {
       console.log("Task is not found");
       return;
     }
-    if (params.length === 1) {
-      switch (params[0]) {
-        case "-d":
-        case "--done":
-          if (task.status === "done") {
-            console.log(chalk.green(`${task.title} is already done`));
-            break;
-          }
-          
-          break;
+    const otherTasks = data.filter((item) => item.id !== task.id);
+    const commands = ["-t", "-s"];
+    const statuses = ["done", "in progress", "not started"];
+    const findCommands = params.filter((param) => commands.includes(param));
+    findCommands.forEach((command, index) => {
+      if (command === "-t") {
+        task.title = params[(index + 1) * 2 - 1];
+      } else {
+        const paramValue = params[(index + 1) * 2 - 1];
+        const check = statuses.includes(paramValue);
+        check
+          ? (task.status = paramValue as "done" | "in progress" | "not started")
+          : console.log("Not a valid status");
       }
-    }
+    });
+    const updatedTasks = [...otherTasks, task];
+    await fs.writeFile(
+      path.join(process.cwd(), "data", "data.json"),
+      JSON.stringify(updatedTasks.sort((a, b) => a.id - b.id))
+    );
+  } catch (err) {
+    console.log(err);
+  }
+}
+async function deleteTask(id: number) {
+  try {
   } catch (err) {
     console.log(err);
   }
