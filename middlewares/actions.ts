@@ -134,8 +134,35 @@ async function updateTask(id: number, params: string[]) {
 }
 async function deleteTask(id: number) {
   try {
+    const jsonData = await fs.readFile(
+      path.join(process.cwd(), "data", "data.json"),
+      "utf-8"
+    );
+    const data: {
+      id: number;
+      title: string;
+      status: "done" | "in progress" | "not started";
+    }[] = JSON.parse(jsonData);
+    const findTask = data.find((item) => item.id === id);
+    if (findTask === undefined) {
+      console.log("Task not found");
+      return;
+    }
+    const newTasks = data.filter((item) => item.id !== id);
+    if (newTasks.length + 1 === id)
+      await fs.writeFile(
+        path.join(process.cwd(), "data", "data.json"),
+        JSON.stringify(newTasks)
+      );
+    else {
+      newTasks.map((task, index) => (task.id = index + 1));
+      await fs.writeFile(
+        path.join(process.cwd(), "data", "data.json"),
+        JSON.stringify(newTasks)
+      );
+    }
   } catch (err) {
     console.log(err);
   }
 }
-export default { ListAllItems, AddItem, updateTask };
+export default { ListAllItems, AddItem, updateTask, deleteTask };

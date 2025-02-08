@@ -5,7 +5,7 @@ import { checkNumber } from "./middlewares/checkNumber.js";
 
 await checkOnData();
 const commands = process.argv.slice(2);
-const validCommands = ["list", "add", "remove", "update"];
+const validCommands = ["list", "add", "delete", "update"];
 const findCommand = commands.find((command) => validCommands.includes(command));
 if (commands.length === 0 || findCommand === undefined) action.ListAllItems();
 switch (findCommand) {
@@ -31,4 +31,14 @@ switch (findCommand) {
       await action.updateTask(parseInt(taskInfo[0]), params);
     } else console.log("invalid Id");
     break;
+  case "delete":
+    const taskId = commands.slice(1)
+    if(!taskId.length){
+      console.log("Id is required")
+      break;
+    }
+    if(checkNumber(taskId[0])) {
+      await action.deleteTask(parseInt(taskId[0]))
+    } else console.log("Not a number")
+
 }
