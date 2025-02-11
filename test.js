@@ -12,15 +12,14 @@ export default async function checkOnData() {
         JSON.stringify([])
       );
     }
-    const dataExists = await fs.readdir(
-      path.join(os.homedir(), "tasks database")
-    );
+    const dataExists = await fs.readdir(path.join(os.homedir(), "tasks database"));
     dataExists.length === 0 &&
       fs.writeFile(
         path.join(os.homedir(), "tasks database", "tasks.json"),
         JSON.stringify([])
       );
-  } catch (err: any) {
+  } catch (err) {
     console.log(err);
   }
 }
+checkOnData();

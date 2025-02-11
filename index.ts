@@ -32,13 +32,12 @@ switch (findCommand) {
     } else console.log("invalid Id");
     break;
   case "delete":
-    const taskId = commands.slice(1)
-    if(!taskId.length){
-      console.log("Id is required")
+    const taskId = commands.slice(1);
+    if (!taskId.length) {
+      console.log("Id is required");
       break;
     }
-    if(checkNumber(taskId[0])) {
-      await action.deleteTask(parseInt(taskId[0]))
-    } else console.log("Not a number")
-
+    if (checkNumber(taskId[0])) {
+      await action.deleteTask(parseInt(taskId[0]));
+    } else console.log("Not a number");
 }

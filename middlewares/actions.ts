@@ -1,11 +1,11 @@
 import fs from "fs/promises";
 import path from "path";
+import os from "os";
 import chalk from "chalk";
 import Table from "cli-table3";
 async function ListAllItems(query?: string) {
-  console.log(query);
   const data = await fs.readFile(
-    path.join(process.cwd(), "data", "data.json"),
+    path.join(os.homedir(), "tasks database", "tasks.json"),
     "utf-8"
   );
   // if there is not tasks
@@ -70,7 +70,7 @@ async function ListAllItems(query?: string) {
         break;
       default:
         console.log("Invalid command");
-        return;
+        break;
     }
   }
   console.log(taskTable.toString());
@@ -78,7 +78,7 @@ async function ListAllItems(query?: string) {
 async function AddItem(titles: string[]) {
   try {
     const jsonData = await fs.readFile(
-      path.join(process.cwd(), "data", "data.json"),
+      path.join(os.homedir(), "tasks database", "tasks.json"),
       "utf-8"
     );
     const data = JSON.parse(jsonData);
@@ -86,7 +86,7 @@ async function AddItem(titles: string[]) {
       data.push({ id: data.length + 1, title, status: "not started" })
     );
     await fs.writeFile(
-      path.join(process.cwd(), "data", "data.json"),
+      path.join(os.homedir(), "tasks database", "tasks.json"),
       JSON.stringify(data)
     );
     console.log(chalk.green("Task added successfully"));
@@ -97,7 +97,7 @@ async function AddItem(titles: string[]) {
 async function updateTask(id: number, params: string[]) {
   try {
     const jsonData = await fs.readFile(
-      path.join(process.cwd(), "data", "data.json"),
+      path.join(os.homedir(), "tasks database", "tasks.json"),
       "utf-8"
     );
     const data: {
@@ -127,7 +127,7 @@ async function updateTask(id: number, params: string[]) {
     });
     const updatedTasks = [...otherTasks, task];
     await fs.writeFile(
-      path.join(process.cwd(), "data", "data.json"),
+      path.join(os.homedir(), "tasks database", "tasks.json"),
       JSON.stringify(updatedTasks.sort((a, b) => a.id - b.id))
     );
   } catch (err) {
@@ -137,7 +137,7 @@ async function updateTask(id: number, params: string[]) {
 async function deleteTask(id: number) {
   try {
     const jsonData = await fs.readFile(
-      path.join(process.cwd(), "data", "data.json"),
+      path.join(os.homedir(), "tasks database", "tasks.json"),
       "utf-8"
     );
     const data: {
@@ -153,13 +153,13 @@ async function deleteTask(id: number) {
     const newTasks = data.filter((item) => item.id !== id);
     if (newTasks.length + 1 === id)
       await fs.writeFile(
-        path.join(process.cwd(), "data", "data.json"),
+        path.join(os.homedir(), "tasks database", "tasks.json"),
         JSON.stringify(newTasks)
       );
     else {
       newTasks.map((task, index) => (task.id = index + 1));
       await fs.writeFile(
-        path.join(process.cwd(), "data", "data.json"),
+        path.join(os.homedir(), "tasks database", "tasks.json"),
         JSON.stringify(newTasks)
       );
     }
