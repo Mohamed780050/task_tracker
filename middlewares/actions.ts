@@ -3,6 +3,7 @@ import path from "path";
 import chalk from "chalk";
 import Table from "cli-table3";
 async function ListAllItems(query?: string) {
+  console.log(query);
   const data = await fs.readFile(
     path.join(process.cwd(), "data", "data.json"),
     "utf-8"
@@ -66,6 +67,7 @@ async function ListAllItems(query?: string) {
             taskTable.push([task.id, task.title, task.status]);
           }
         });
+        break;
       default:
         console.log("Invalid command");
         return;
