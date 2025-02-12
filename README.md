@@ -1,10 +1,10 @@
 # Task Tracker CLI
 
+📚 Project Source
+This project was created as part of [roadmap.sh](https://roadmap.sh/projects/task-tracker)
 A simple command-line tool for tracking your tasks efficiently.
 
-## 📚 Project Source
 
-This project was created as part of roadmap.sh.
 ## 📌 Features
 - Add, update, delete, and list tasks directly from the command line.
 - Filter tasks based on their status (Done, In Progress, Not Started).
