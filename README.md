@@ -1,7 +1,9 @@
 # Task Tracker CLI
 
 📚 Project Source
-This project was created as part of [roadmap.sh](https://roadmap.sh/projects/task-tracker)
+
+This project was created as part of [roadmap.sh](https://roadmap.sh/projects/task-tracker).
+
 A simple command-line tool for tracking your tasks efficiently.
 
 
